@@ -1,0 +1,21 @@
+# OS-specific
+.DS_Store
+
+# IDE-specific
+.idea/
+*.iml
+
+# Gradle
+.gradle/
+build/
+out/
+
+# Java compiled files
+*.class
+
+# Hyperskill course metadata
+#course-info.yaml
+#course-remote-info.yaml
+
+#Remove Repeated Topics
+Topics/
