@@ -1,21 +1,63 @@
 package lastpencil;
 
 import java.util.Random;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        PencilGame.play();
+        Scanner scanner = new Scanner(System.in);
+        new PencilGame(scanner).play();
+        scanner.close();
     }
 }
 
 class PencilGame {
-    private static final int MIN_PENCILS = 3;
-    private static final int MAX_PENCILS = 8;
+    private static final int MIN_PENCILS = 1;
+    private static final int MAX_PENCILS = 9999;
+    public static final String playerOne = "John";
+    public static final String playerTwo = "Jack";
+    private final Scanner scanner;
 
-    public static void play() {
-        int pencils = generateRandomPencilCount();
+    PencilGame(Scanner scanner) {
+        this.scanner = scanner;
+    }
+
+    public void play() {
+        int pencils = promptForPencilCount();
+        String firstPlayer = promptForFirstPlayer();
         printPencils(pencils);
-        nextTurn();
+        System.out.println(firstPlayer + " is going first!");
+    }
+
+    private int promptForPencilCount() {
+        while (true) {
+            System.out.println("How many pencils would you like to use:");
+            try {
+                int pencils = Integer.parseInt(scanner.nextLine());
+                if (pencils < MIN_PENCILS || pencils > MAX_PENCILS) {
+                    throw new Exception("Pencils must be between " + MIN_PENCILS +" and " + MAX_PENCILS +"!");
+                }
+                return pencils;
+
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid number format!");
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    private String promptForFirstPlayer() {
+        while (true) {
+            System.out.printf("Who will be the first (%s, %s):%n", playerOne, playerTwo );
+            if (scanner.hasNextLine()) {
+                String firstPlayer = scanner.nextLine();
+                if (firstPlayer.equalsIgnoreCase(playerOne)
+                        || firstPlayer.equalsIgnoreCase(playerTwo)) {
+                    return firstPlayer;
+                }
+            }
+        }
     }
 
     private static void nextTurn() {
@@ -29,7 +71,7 @@ class PencilGame {
 
     private static void printPencils(int count) {
         StringBuilder pencils = new StringBuilder();
-        pencils.append("|".repeat(Math.max(0, count)));
+        pencils.append("|".repeat(count));
         System.out.println(pencils);
     }
 }
