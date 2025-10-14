@@ -30,6 +30,7 @@ subprojects {
 
     dependencies {
         testImplementation 'com.github.hyperskill:hs-test:release-SNAPSHOT'
+        testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
     }
 
     configurations.all {
@@ -42,6 +43,7 @@ subprojects {
     }
 
     test {
+        useJUnitPlatform()
         systemProperty "file.encoding", "utf-8"
         outputs.upToDateWhen { false }
     }
