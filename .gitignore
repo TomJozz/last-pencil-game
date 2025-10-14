@@ -19,3 +19,6 @@ out/
 
 #Remove Repeated Topics
 Topics/
+
+# Ignore Java heap dump files
+*.hprof
