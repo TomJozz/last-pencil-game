@@ -7,7 +7,7 @@ public class Main {
         InputProvider inputProvider = new ConsoleInputProvider(new Scanner(System.in));
         new LastPencilGame(inputProvider).play();
 
-        //sc.close();
+        //TODO: sc.close();
     }
 }
 

@@ -6,24 +6,6 @@ files:
   - name: test/LastPencilTest.java
     visible: false
     learner_created: false
-  - name: test/lastpencil/LastPencilGameTest.java
-    visible: true
-    learner_created: true
-  - name: test/lastpencil/MockInputProvider.java
-    visible: true
-    learner_created: true
-  - name: src/lastpencil/InputProvider.java
-    visible: true
-    learner_created: true
-  - name: src/lastpencil/LastPencilGame.java
-    visible: true
-    learner_created: true
-  - name: src/lastpencil/ConsoleInputProvider.java
-    visible: true
-    learner_created: true
 feedback_link: https://hyperskill.org/projects/341/stages/2007/implement#comment
 status: Solved
-feedback:
-  message: Congratulations!
-  time: "Tue, 14 Oct 2025 19:56:01 UTC"
 record: -1
