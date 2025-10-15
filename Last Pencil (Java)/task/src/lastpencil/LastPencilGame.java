@@ -38,6 +38,8 @@ public class LastPencilGame {
                 if (numPencilsToUse < 1 || numPencilsToUse > 3) {
                     System.out.println("Possible values: '1', '2' or '3'");
                     continue;
+                } else if (numPencilsToUse > pencilsCount) {
+                    System.out.println("Too many pencils were taken");
                 }
                 return numPencilsToUse;
             } catch (NumberFormatException e) {
