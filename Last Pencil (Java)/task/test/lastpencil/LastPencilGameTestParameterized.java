@@ -1,5 +1,7 @@
 package lastpencil;
 
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Timeout;
 
 import org.junit.jupiter.params.ParameterizedTest;
@@ -78,6 +80,8 @@ public class LastPencilGameTestParameterized {
     @ParameterizedTest
     @MethodSource("invalidInputScenarios")
     @Timeout(5)
+    @DisplayName("Input validation test")
+    @Tag("validation")
     void testInvalidInputs(String description, String[] inputs, String expectedMessage) {
         MockInputProvider mock = new MockInputProvider();
         for (String input : inputs) {
@@ -88,4 +92,36 @@ public class LastPencilGameTestParameterized {
         assertTrue(output.contains(expectedMessage), "Failed: " + description);
     }
 
+    private static Stream<Arguments> winnerScenarios() {
+        return Stream.of(
+                Arguments.of("John starts, loses",
+                        new String[]{"3", "John", "1", "1", "1"},
+                        "Jack"),
+
+                Arguments.of("Jack starts, loses",
+                        new String[]{"3", "Jack", "1", "1", "1"},
+                        "John"),
+
+                Arguments.of("John starts, wins",
+                        new String[]{"4", "John", "1", "1", "1", "1"},
+                        "John"),
+
+                Arguments.of("Jack starts, wins",
+                        new String[]{"4", "Jack", "1", "1", "1", "1"},
+                        "Jack")
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("winnerScenarios")
+    @Timeout(5)
+    void testWinnerLogic(String description, String[] inputs, String expectedWinner) {
+        MockInputProvider mock = new MockInputProvider();
+        for (String input : inputs) {
+            mock.addInput(input);
+        }
+
+        String output = runGameWithMockInput(mock);
+        assertTrue(output.contains(expectedWinner + " won!"), "Failed: " + description);
+    }
 }
