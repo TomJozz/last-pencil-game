@@ -7,8 +7,6 @@ import java.util.function.Function;
 public class LastPencilGame {
     private static final int MIN_PENCILS = 1;
     private static final int MAX_PENCILS = 999;
-    public static final String playerOne = "John";
-    public static final String playerTwo = "Jack";
     private final InputProvider inputProvider;
 
     LastPencilGame(InputProvider inputProvider) {
@@ -17,20 +15,20 @@ public class LastPencilGame {
 
     public void play() {
         int pencilsCount = promptForPencilCount();
-        String firstPlayer = promptForFirstPlayer();
-        startGameLoop(pencilsCount, firstPlayer);
+        Player currentPlayer = Player.from(promptForFirstPlayer());
+        startGameLoop(pencilsCount, currentPlayer);
     }
 
-    private void startGameLoop(int pencilsCount, String currentPlayer) {
+    private void startGameLoop(int pencilsCount, Player currentPlayer) {
         while (pencilsCount >= MIN_PENCILS ) {
             printPencils(pencilsCount);
-            System.out.println(currentPlayer + "'s turn:");
-            int numPencilsToUse = promptForPencilsToRemove(pencilsCount);
+            System.out.println(currentPlayer.getName() + "'s turn:");
+            int numPencilsToTake = promptForPencilsToRemove(pencilsCount);
 
-            pencilsCount -= numPencilsToUse;
-            currentPlayer = switchPlayer(currentPlayer);
+            pencilsCount -= numPencilsToTake;
+            currentPlayer = currentPlayer.switchPlayer();
             if (pencilsCount == 0) {
-                System.out.println(currentPlayer + " won!");
+                System.out.println(currentPlayer.getName() + " won!");
             }
         }
     }
@@ -66,7 +64,7 @@ public class LastPencilGame {
         };
     }
 
-    public int promptForPencilsToRemove(int remaining) {
+    int promptForPencilsToRemove(int remaining) {
         return readValidatedInput(
                 String.format("%d pencils left. How many will you take?", remaining),
                 Integer::parseInt,
@@ -91,23 +89,19 @@ public class LastPencilGame {
     }
 
     Function<String, Optional<String>> playerNameValidator = name -> {
-        if (!name.equals(playerOne) && !name.equals(playerTwo)) {
-            return Optional.of("Choose between '" + playerOne + "' and '" +  playerTwo + "'");
+        if (!name.equals(Player.JOHN.getName()) && !name.equals(Player.JACK.getName())) {
+            return Optional.of(String.format("Choose between '%s' and '%s'",  Player.JOHN.getName(), Player.JACK.getName()));
         }
         return Optional.empty();
     };
 
     String promptForFirstPlayer() {
         return readValidatedInput(
-                "Who will be the first (John, Jack):",
+                String.format("Who will be the first (%s, %s):", Player.JOHN.getName(),  Player.JACK.getName()),
                 Function.identity(),
                 playerNameValidator,
                 "Invalid name format" //TODO RegexNameFormatCheck
         );
-    }
-
-    private String switchPlayer(String currentPlayer) {
-        return currentPlayer.equalsIgnoreCase("John") ? "Jack" : "John";
     }
 
     private int generateRandomPencilCount () {
