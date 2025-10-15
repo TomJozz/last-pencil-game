@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,7 +15,8 @@ class LastPencilGameTest {
         // Limit output to avoid memory overflow
         ByteArrayOutputStream outContent = new ByteArrayOutputStream(8192); // 8 KB cap
         PrintStream originalOut = System.out;
-        System.setOut(new PrintStream(outContent));
+        PrintStream testOut = new PrintStream(outContent);
+        System.setOut(testOut);
 
         // Run game with a timeout thread to prevent infinite loop
         LastPencilGame game = new LastPencilGame(mockInput);
@@ -31,6 +33,12 @@ class LastPencilGameTest {
             throw new RuntimeException("Test interrupted", e);
         }
 
+        testOut.close();
+        try {
+            outContent.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         System.setOut(originalOut);
         return outContent.toString();
     }

@@ -6,6 +6,9 @@ files:
   - name: test/LastPencilTest.java
     visible: false
     learner_created: false
+  - name: test/lastpencil/LastPencilGameTestParameterized.java
+    visible: true
+    learner_created: true
 feedback_link: https://hyperskill.org/projects/341/stages/2008/implement#comment
 status: Unchecked
 record: -1
