@@ -18,21 +18,7 @@ class LastPencilGameTestTwo {
 
 
 
-//
-//    @Timeout(5)
-//    @Test
-//    void testInvalidPencilRemovalAmount() {
-//        MockInputProvider mock = new MockInputProvider();
-//        mock.addInput("5");
-//        mock.addInput("John");
-//        mock.addInput("4"); // invalid
-//        mock.addInput("2"); // valid
-//        mock.addInput("1"); // valid
-//        mock.addInput("2"); // valid
-//
-//        String output = runGameWithMockInput(mock);
-//        assertTrue(output.contains("Possible values: '1', '2' or '3'"));
-//    }
+
 //
 //    @Timeout(5)
 //    @Test

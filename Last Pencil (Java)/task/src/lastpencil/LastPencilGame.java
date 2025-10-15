@@ -35,18 +35,14 @@ public class LastPencilGame {
             int numPencilsToUse = 0;
             try {
                 numPencilsToUse = Integer.parseInt(inputProvider.readLine());
-                if (numPencilsToUse > pencilsCount || numPencilsToUse < MIN_PENCILS) {
-                    if (pencilsCount == 1) {
-                        System.out.println("\uD83D\uDE44 There is only one left");
-                    } else {
-                        System.out.printf("You can't use less than %d or more than %d pencils!\n", MIN_PENCILS, pencilsCount);
-                    }
+                if (numPencilsToUse < 1 || numPencilsToUse > 3) {
+                    System.out.println("Possible values: '1', '2' or '3'");
                     continue;
                 }
+                return numPencilsToUse;
             } catch (NumberFormatException e) {
                 System.out.println("Invalid number format! Please enter digits only.");
             }
-            return numPencilsToUse;
         }
     }
 
