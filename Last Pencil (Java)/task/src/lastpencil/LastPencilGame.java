@@ -3,8 +3,8 @@ package lastpencil;
 import java.util.Random;
 
 public class LastPencilGame {
-    private static final int MIN_PENCILS = 3;
-    private static final int MAX_PENCILS = 8;
+    private static final int MIN_PENCILS = 1;
+    private static final int MAX_PENCILS = 999;
     public static final String playerOne = "John";
     public static final String playerTwo = "Jack";
     private final InputProvider inputProvider;

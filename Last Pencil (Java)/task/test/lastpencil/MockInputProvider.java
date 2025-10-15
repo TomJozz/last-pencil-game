@@ -12,7 +12,9 @@ public class MockInputProvider implements InputProvider {
 
     @Override
     public String readLine() {
-        return inputs.poll();
+        String next = inputs.poll();
+        System.out.println("> " + next);
+        return next;
     }
 
     @Override
