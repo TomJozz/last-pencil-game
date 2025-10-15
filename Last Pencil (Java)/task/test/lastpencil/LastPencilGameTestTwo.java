@@ -17,17 +17,7 @@ class LastPencilGameTestTwo {
 
 
 
-//
-//    @Test
-//    void testInvalidFirstPlayer() {
-//        MockInputProvider mock = new MockInputProvider();
-//        mock.addInput("5");
-//        mock.addInput("Alice");
-//        mock.addInput("Jack");
-//
-//        String output = runGameWithMockInput(mock);
-//        assertTrue(output.contains("Choose between 'John' and 'Jack'"));
-//    }
+
 //
 //    @Timeout(5)
 //    @Test

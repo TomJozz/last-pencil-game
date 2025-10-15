@@ -81,6 +81,20 @@ class LastPencilGameTest {
 
     @Timeout(5)
     @Test
+    void testInvalidFirstPlayer() {
+        MockInputProvider mock = new MockInputProvider();
+        mock.addInput("5");     // valid
+        mock.addInput("Alice"); // invalid name
+        mock.addInput("Jack");  // valid name
+        mock.addInput("3");     // valid move
+        mock.addInput("2");     // valid move
+
+        String output = runGameWithMockInput(mock);
+        assertTrue(output.contains("Choose between 'John' and 'Jack'"));
+    }
+
+    @Timeout(5)
+    @Test
     void testValidInputFlow() {
         MockInputProvider mockInput = new MockInputProvider();
         mockInput.addInput("5");     // pencil count

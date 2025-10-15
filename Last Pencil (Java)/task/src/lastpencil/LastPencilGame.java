@@ -76,6 +76,8 @@ public class LastPencilGame {
                 if (firstPlayer.equalsIgnoreCase(playerOne)
                         || firstPlayer.equalsIgnoreCase(playerTwo)) {
                     return firstPlayer;
+                } else  {
+                    System.out.println("Choose between 'John' and 'Jack'");
                 }
             }
         }
