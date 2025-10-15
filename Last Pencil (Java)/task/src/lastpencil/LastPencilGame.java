@@ -1,6 +1,8 @@
 package lastpencil;
 
+import java.util.Optional;
 import java.util.Random;
+import java.util.function.Function;
 
 public class LastPencilGame {
     private static final int MIN_PENCILS = 1;
@@ -23,7 +25,7 @@ public class LastPencilGame {
         while (pencilsCount >= MIN_PENCILS ) {
             printPencils(pencilsCount);
             System.out.println(currentPlayer + "'s turn:");
-            int numPencilsToUse = readValidPencilsToUseInput(pencilsCount);
+            int numPencilsToUse = promptForPencilsToRemove(pencilsCount);
 
             pencilsCount -= numPencilsToUse;
             currentPlayer = switchPlayer(currentPlayer);
@@ -33,55 +35,75 @@ public class LastPencilGame {
         }
     }
 
-    private int readValidPencilsToUseInput(int pencilsCount) {
+    public <T> T readValidatedInput(
+            String prompt,
+            Function<String, T> parser,
+            Function<T, Optional<String>> validator,
+            String formatErrorMessage
+    ) {
         while (true) {
-            int numPencilsToUse = 0;
+            System.out.println(prompt);
+            String line = inputProvider.readLine();
             try {
-                numPencilsToUse = Integer.parseInt(inputProvider.readLine());
-                if (numPencilsToUse < 1 || numPencilsToUse > 3) {
-                    System.out.println("Possible values: '1', '2' or '3'");
-                    continue;
-                } else if (numPencilsToUse > pencilsCount) {
-                    System.out.println("Too many pencils were taken");
+                T value = parser.apply(line);
+                Optional<String> error = validator.apply(value);
+                if (error.isEmpty()) {
+                    return value;
+                } else {
+                    System.out.println(error.get());
                 }
-                return numPencilsToUse;
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid number format! Please enter digits only.");
+            } catch (Exception e) {
+                System.out.println(formatErrorMessage);
             }
         }
     }
+
+    Function<Integer, Optional<String>> pencilsToTakeValidator(int remaining) {
+        return value -> {
+            if (value < 1 || value > 3) return Optional.of("Possible values: '1', '2' or '3'");
+            if (value > remaining) return Optional.of("Too many pencils were taken");
+            return Optional.empty();
+        };
+    }
+
+    public int promptForPencilsToRemove(int remaining) {
+        return readValidatedInput(
+                String.format("%d pencils left. How many will you take?", remaining),
+                Integer::parseInt,
+                pencilsToTakeValidator(remaining),
+                "The input should be a valid number."
+        );
+    }
+
+    Function<Integer, Optional<String>> pencilValidator = value -> {
+        if (value < 0) return Optional.of("The number of pencils should be numeric");
+        if (value == 0) return Optional.of("The number of pencils should be positive");
+        return Optional.empty();
+    };
 
     int promptForPencilCount() {
-        while (true) {
-            System.out.println("How many pencils would you like to use:");
-            try {
-                int pencils = Integer.parseInt(inputProvider.readLine());
-                if (pencils == 0) {
-                   System.out.println("The number of pencils should be positive");
-                    continue;
-                } else if (pencils < 0) {
-                    throw new NumberFormatException();
-                }
-                return pencils;
-            } catch (NumberFormatException e) {
-                System.out.println("The number of pencils should be numeric");
-            }
-        }
+        return readValidatedInput(
+                "How many pencils would you like to use:",
+                Integer::parseInt,
+                pencilValidator,
+                "The number of pencils should be numeric"
+        );
     }
 
-    String promptForFirstPlayer() {
-        while (true) {
-            System.out.printf("Who will be the first (%s, %s):%n", playerOne, playerTwo );
-            if (inputProvider.hasNextLine()) {
-                String firstPlayer = inputProvider.readLine();
-                if (firstPlayer.equalsIgnoreCase(playerOne)
-                        || firstPlayer.equalsIgnoreCase(playerTwo)) {
-                    return firstPlayer;
-                } else  {
-                    System.out.println("Choose between 'John' and 'Jack'");
-                }
-            }
+    Function<String, Optional<String>> playerNameValidator = name -> {
+        if (!name.equals(playerOne) && !name.equals(playerTwo)) {
+            return Optional.of("Choose between '" + playerOne + "' and '" +  playerTwo + "'");
         }
+        return Optional.empty();
+    };
+
+    String promptForFirstPlayer() {
+        return readValidatedInput(
+                "Who will be the first (John, Jack):",
+                Function.identity(),
+                playerNameValidator,
+                "Invalid name format" //TODO RegexNameFormatCheck
+        );
     }
 
     private String switchPlayer(String currentPlayer) {
