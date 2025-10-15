@@ -55,12 +55,13 @@ public class LastPencilGame {
             System.out.println("How many pencils would you like to use:");
             try {
                 int pencils = Integer.parseInt(inputProvider.readLine());
-                if (pencils < MIN_PENCILS) {
+                if (pencils == 0) {
                    System.out.println("The number of pencils should be positive");
                     continue;
+                } else if (pencils < 0) {
+                    throw new NumberFormatException();
                 }
                 return pencils;
-
             } catch (NumberFormatException e) {
                 System.out.println("The number of pencils should be numeric");
             }

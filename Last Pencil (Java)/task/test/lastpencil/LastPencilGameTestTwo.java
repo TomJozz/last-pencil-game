@@ -16,18 +16,7 @@ class LastPencilGameTestTwo {
 
 
 
-//
-//    @Timeout(5)
-//    @Test
-//    void testNegativePencilCount() {
-//        MockInputProvider mock = new MockInputProvider();
-//        mock.addInput("-3");
-//        mock.addInput("5");
-//        mock.addInput("John");
-//
-//        String output = runGameWithMockInput(mock);
-//        assertTrue(output.contains("The number of pencils should be numeric"));
-//    }
+
 //
 //    @Test
 //    void testInvalidFirstPlayer() {
