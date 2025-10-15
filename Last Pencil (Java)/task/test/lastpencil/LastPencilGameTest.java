@@ -1,10 +1,56 @@
 package lastpencil;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class LastPencilGameTest {
 
+    private String runGameWithMockInput(MockInputProvider mockInput) {
+        // Limit output to avoid memory overflow
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream(8192); // 8 KB cap
+        PrintStream originalOut = System.out;
+        System.setOut(new PrintStream(outContent));
+
+        // Run game with a timeout thread to prevent infinite loop
+        LastPencilGame game = new LastPencilGame(mockInput);
+        Thread gameThread = new Thread(game::play);
+        gameThread.start();
+
+        try {
+            gameThread.join(3000); // wait max 3 seconds
+            if (gameThread.isAlive()) {
+                gameThread.interrupt(); // kill runaway loop
+                throw new RuntimeException("Game loop did not terminate");
+            }
+        } catch (InterruptedException e) {
+            throw new RuntimeException("Test interrupted", e);
+        }
+
+        System.setOut(originalOut);
+        return outContent.toString();
+    }
+
+    @Timeout(5)
+    @Test
+    void testNonNumericPencilCount() {
+        MockInputProvider mock = new MockInputProvider();
+        mock.addInput("abc");  // invalid
+        mock.addInput("5");    // valid
+        mock.addInput("John"); // valid
+        mock.addInput("1");    // valid move
+        mock.addInput("1");    // valid move
+        mock.addInput("3");    // valid move
+
+        String output = runGameWithMockInput(mock);
+        assertTrue(output.contains("The number of pencils should be numeric"));
+    }
+
+    @Timeout(5)
     @Test
     void testValidInputFlow() {
         MockInputProvider mockInput = new MockInputProvider();
@@ -20,6 +66,7 @@ class LastPencilGameTest {
         assertEquals("John", player);
     }
 
+    @Timeout(5)
     @Test
     void testInvalidThenValidInputs() {
         MockInputProvider mockInput = new MockInputProvider();

@@ -62,7 +62,7 @@ public class LastPencilGame {
                 return pencils;
 
             } catch (NumberFormatException e) {
-                System.out.println("Invalid number format! Please enter digits only.");
+                System.out.println("The number of pencils should be numeric");
             }
         }
     }
