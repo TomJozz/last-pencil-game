@@ -55,8 +55,8 @@ public class LastPencilGame {
             System.out.println("How many pencils would you like to use:");
             try {
                 int pencils = Integer.parseInt(inputProvider.readLine());
-                if (pencils < MIN_PENCILS || pencils > MAX_PENCILS) {
-                   System.out.printf("Please enter a number between %d and %d.%n", MIN_PENCILS, MAX_PENCILS);
+                if (pencils < MIN_PENCILS) {
+                   System.out.println("The number of pencils should be positive");
                     continue;
                 }
                 return pencils;
