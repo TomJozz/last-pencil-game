@@ -27,6 +27,9 @@ public class LastPencilGame {
 
             pencilsCount -= numPencilsToUse;
             currentPlayer = switchPlayer(currentPlayer);
+            if (pencilsCount == 0) {
+                System.out.println(currentPlayer + " won!");
+            }
         }
     }
 

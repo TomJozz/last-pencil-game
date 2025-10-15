@@ -123,6 +123,20 @@ class LastPencilGameTest {
 
     @Timeout(5)
     @Test
+    void testWinnerAnnouncement() {
+        MockInputProvider mock = new MockInputProvider();
+        mock.addInput("3");
+        mock.addInput("John");
+        mock.addInput("1"); // John
+        mock.addInput("1"); // Jack
+        mock.addInput("1"); // John (last pencil)
+
+        String output = runGameWithMockInput(mock);
+        assertTrue(output.contains("Jack won!"));
+    }
+
+    @Timeout(5)
+    @Test
     void testValidInputFlow() {
         MockInputProvider mockInput = new MockInputProvider();
         mockInput.addInput("5");     // pencil count
