@@ -13,9 +13,4 @@ public class ConsoleInputProvider implements InputProvider {
     public String readLine() {
         return scanner.nextLine();
     }
-
-    @Override
-    public boolean hasNextLine() {
-        return scanner.hasNextLine();
-    }
 }

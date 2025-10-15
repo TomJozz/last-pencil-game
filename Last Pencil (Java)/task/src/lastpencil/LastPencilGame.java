@@ -16,21 +16,19 @@ public class LastPencilGame {
     public void play() {
         int pencilsCount = promptForPencilCount();
         Player currentPlayer = Player.from(promptForFirstPlayer());
-        startGameLoop(pencilsCount, currentPlayer);
+        Player winner = startGameLoop(pencilsCount, currentPlayer);
+        System.out.println(winner.getName() + " won!");
     }
 
-    private void startGameLoop(int pencilsCount, Player currentPlayer) {
+    private Player startGameLoop(int pencilsCount, Player currentPlayer) {
         while (pencilsCount >= MIN_PENCILS ) {
             printPencils(pencilsCount);
             System.out.println(currentPlayer.getName() + "'s turn:");
             int numPencilsToTake = promptForPencilsToRemove(pencilsCount);
-
             pencilsCount -= numPencilsToTake;
             currentPlayer = currentPlayer.switchPlayer();
-            if (pencilsCount == 0) {
-                System.out.println(currentPlayer.getName() + " won!");
-            }
         }
+        return currentPlayer;
     }
 
     public <T> T readValidatedInput(

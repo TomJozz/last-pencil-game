@@ -16,9 +16,4 @@ public class MockInputProvider implements InputProvider {
         System.out.println("> " + next);
         return next;
     }
-
-    @Override
-    public boolean hasNextLine() {
-        return true;
-    }
 }

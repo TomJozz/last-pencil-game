@@ -4,9 +4,9 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        InputProvider inputProvider = new ConsoleInputProvider(new Scanner(System.in));
+        Scanner scanner = new Scanner(System.in);
+        InputProvider inputProvider = new ConsoleInputProvider(scanner);
         new LastPencilGame(inputProvider).play();
-
-        //TODO: sc.close();
+        scanner.close();
     }
 }
