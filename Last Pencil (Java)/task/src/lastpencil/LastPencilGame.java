@@ -1,13 +1,15 @@
 package lastpencil;
 
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 import java.util.function.Function;
+
 
 public class LastPencilGame {
     private static final int MIN_PENCILS = 1;
     private static final int MAX_PENCILS = 999;
     private final InputProvider inputProvider; // Input abstraction for TDD mocking
+    private final Map<String, PlayerStrategy> strategies = new HashMap<>();
+
 
     LastPencilGame(InputProvider inputProvider) {
         this.inputProvider = inputProvider;
@@ -16,6 +18,9 @@ public class LastPencilGame {
     public void play() {
         int pencilsCount = promptForPencilCount();
         Player currentPlayer = Player.from(promptForFirstPlayer());
+        strategies.put(Player.JOHN.getName(), new HumanPlayerStrategy(this, inputProvider));
+        strategies.put(Player.JACK.getName(), new SmartAIPlayerStrategy());
+
         Player winner = startGameLoop(pencilsCount, currentPlayer);
         System.out.println(winner.getName() + " won!");
     }
@@ -24,7 +29,9 @@ public class LastPencilGame {
         while (pencilsCount >= MIN_PENCILS ) {
             printPencils(pencilsCount);
             System.out.println(currentPlayer.getName() + "'s turn:");
-            int numPencilsToTake = promptForPencilsToRemove(pencilsCount);
+            PlayerStrategy strategy = strategies.get(currentPlayer.getName());
+            int numPencilsToTake = strategy.chooseMove(pencilsCount);
+            System.out.println(numPencilsToTake);
             pencilsCount -= numPencilsToTake;
             currentPlayer = currentPlayer.switchPlayer();
         }
@@ -87,7 +94,7 @@ public class LastPencilGame {
     }
 
     Function<String, Optional<String>> playerNameValidator = name -> {
-        if (!name.equals(Player.JOHN.getName()) && !name.equals(Player.JACK.getName())) {
+        if (!Player.isValid(name)) {
             return Optional.of(String.format("Choose between '%s' and '%s'",  Player.JOHN.getName(), Player.JACK.getName()));
         }
         return Optional.empty();

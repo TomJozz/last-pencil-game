@@ -1,8 +1,5 @@
 type: edu
 files:
-  - name: src/lastpencil/Main.java
-    visible: true
-    learner_created: false
   - name: test/LastPencilTest.java
     visible: false
     learner_created: false
@@ -13,5 +10,5 @@ feedback_link: https://hyperskill.org/projects/341/stages/2008/implement#comment
 status: Solved
 feedback:
   message: Congratulations!
-  time: "Thu, 16 Oct 2025 00:01:02 UTC"
-record: -1
+  time: "Thu, 16 Oct 2025 00:19:58 UTC"
+record: 4
