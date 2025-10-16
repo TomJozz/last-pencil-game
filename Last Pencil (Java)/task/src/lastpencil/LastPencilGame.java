@@ -7,7 +7,7 @@ import java.util.function.Function;
 public class LastPencilGame {
     private static final int MIN_PENCILS = 1;
     private static final int MAX_PENCILS = 999;
-    private final InputProvider inputProvider;
+    private final InputProvider inputProvider; // Input abstraction for TDD mocking
 
     LastPencilGame(InputProvider inputProvider) {
         this.inputProvider = inputProvider;
