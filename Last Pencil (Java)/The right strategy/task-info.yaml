@@ -9,6 +9,9 @@ files:
   - name: src/lastpencil/Main.java
     visible: true
     learner_created: true
+  - name: test/lastpencil/SmartAIStrategyTest.java
+    visible: true
+    learner_created: true
 feedback_link: https://hyperskill.org/projects/341/stages/2009/implement#comment
 status: Solved
 feedback:

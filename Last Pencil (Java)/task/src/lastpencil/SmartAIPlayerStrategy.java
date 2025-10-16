@@ -7,11 +7,11 @@ public class SmartAIPlayerStrategy implements PlayerStrategy {
 
     @Override
     public int chooseMove(int remainingPencils) {
+        if (remainingPencils == 1)
+            return 1;
+
         int optimalMove = remainingPencils % 4;
-        return (optimalMove == 0) ? 3
-                : ((optimalMove == 3) ? 2
-                : ((optimalMove == 2) ? 1
-                : ((optimalMove == 1) ? random.nextInt(1, 4)
-                : 1)));
+        int[] moves = {3, random.nextInt(3) + 1, 1, 2};
+        return moves[optimalMove];
     }
 }
