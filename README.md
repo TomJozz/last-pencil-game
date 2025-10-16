@@ -25,7 +25,7 @@ This project was a comprehensive exercise in basic Java programming, covering se
 
 Although this was a relatively simple project, I kept it engaging by applying clean code principles such as abstraction, separation of concerns, and the strategy pattern. I focused on designing flexible input handling using Java generics and structuring the game logic for extensibility and maintainability.
 
-To ensure reliability and correctness, I practiced **Test-Driven Development (TDD)** and wrote comprehensive unit tests using **JUnit 5**, covering AI behavior, input validation, and game flow. One of the key challenges was avoiding repetitive code while preserving clarity — I overcame this through functional programming techniques and thoughtful refactoring.
+To ensure reliability and correctness, I practiced **Test-Driven Development (TDD)** and wrote comprehensive unit tests using **JUnit 5**, covering AI behavior, input validation, and game flow. One of the key challenges was avoiding repetitive code while preserving clarity. I overcame this through functional programming techniques and thoughtful refactoring.
 
 Overall, this project deepened my understanding of writing clean, testable Java code and helped me become more aware of my own learning process and development practices.
 
